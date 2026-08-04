@@ -26,6 +26,23 @@ def notation_of(node):
     return repr(node).split()[0]
 
 
+def extract_variant_notations(ic):
+    variant_notations = []
+
+    for notation, obj in ic.source._D.items():
+        if notation is None:
+            continue
+
+        key = obj.get("k")
+        if not key:
+            continue
+
+        for suffix in key.get("s", []):
+            variant_notations.append(f"{notation}(+{suffix})")
+
+    return variant_notations
+
+
 def build_db():
     ic = init()
     used_notation_keys = load_used_notation_keys(USED_NOTATION_KEYS_PATH)
@@ -51,10 +68,14 @@ def build_db():
     cur.execute("CREATE INDEX idx_iconclass_notation ON iconclass(notation);")
 
     inserted = 0
+    inserted_variants = 0
     skipped_empty = 0
     skipped_filtered = 0
 
-    all_notations = [x for x in ic.source._D.keys() if x is not None]
+    base_notations = [x for x in ic.source._D.keys() if x is not None]
+    variant_notations = extract_variant_notations(ic)
+
+    all_notations = sorted(set(base_notations + variant_notations))
 
     for notation in all_notations:
         if not keep_notation(notation, used_notation_keys):
@@ -95,6 +116,9 @@ def build_db():
 
             inserted += 1
 
+            if "(+" in notation:
+                inserted_variants += 1
+
             if inserted % 100000 == 0:
                 con.commit()
                 print(f"{inserted} entries...")
@@ -105,6 +129,7 @@ def build_db():
     print(f"Database built: {DB_PATH}")
     print(f"Total source notations: {len(all_notations)}")
     print(f"Inserted entries: {inserted}")
+    print(f"Inserted variants: {inserted_variants}")
     print(f"Skipped by filtering rule: {skipped_filtered}")
     print(f"Skipped empty labels: {skipped_empty}")
 

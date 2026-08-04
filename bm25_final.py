@@ -5,6 +5,7 @@ import json
 import os
 from datetime import datetime
 from collections import defaultdict
+from tqdm import tqdm
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -30,6 +31,23 @@ def keep_notation(notation, used_notation_keys):
     if notation.find("(+") > 1 and notation not in used_notation_keys:
         return False
     return True
+
+
+def extract_variant_notations(ic):
+    variant_notations = []
+
+    for notation, obj in ic.source._D.items():
+        if notation is None:
+            continue
+
+        key = obj.get("k")
+        if not key:
+            continue
+
+        for suffix in key.get("s", []):
+            variant_notations.append(f"{notation}(+{suffix})")
+
+    return variant_notations
 
 
 def load_ground_truth(path=GROUND_TRUTH_CSV_PATH, has_header=True):
@@ -66,10 +84,15 @@ def build_bm25_corpus(used_notation_keys_path=USED_NOTATION_KEYS_PATH):
     used_notation_keys = load_used_notation_keys(used_notation_keys_path)
 
     corpus = []
-    all_notations = [x for x in ic.source._D.keys() if x is not None]
+
+    base_notations = [x for x in ic.source._D.keys() if x is not None]
+    variant_notations = extract_variant_notations(ic)
+
+    all_notations = sorted(set(base_notations + variant_notations))
 
     skipped_filtered = 0
     skipped_empty = 0
+    inserted_variants = 0
 
     for notation in all_notations:
         if not keep_notation(notation, used_notation_keys):
@@ -96,6 +119,9 @@ def build_bm25_corpus(used_notation_keys_path=USED_NOTATION_KEYS_PATH):
             "tokens": tokens
         })
 
+        if "(+" in notation:
+            inserted_variants += 1
+
     df = defaultdict(int)
 
     for item in corpus:
@@ -107,6 +133,7 @@ def build_bm25_corpus(used_notation_keys_path=USED_NOTATION_KEYS_PATH):
 
     print(f"Total source notations: {len(all_notations)}")
     print(f"Filtered BM25 corpus size: {len(corpus)}")
+    print(f"Inserted variants: {inserted_variants}")
     print(f"Skipped by filtering rule: {skipped_filtered}")
     print(f"Skipped empty labels: {skipped_empty}")
 
@@ -198,7 +225,12 @@ def run_bm25_on_ground_truth(
         print("These codes cannot be retrieved by BM25 under the shared filtering rule.")
         print(f"Queries affected: {len(missing)}\n")
 
-    for query, gt_codes in ground_truth.items():
+    for query, gt_codes in tqdm(
+        ground_truth.items(),
+        total=len(ground_truth),
+        desc="Running BM25",
+        unit="query"
+    ):
         results = search_iconclass_bm25(query, top_n=top_n)
 
         record = {
