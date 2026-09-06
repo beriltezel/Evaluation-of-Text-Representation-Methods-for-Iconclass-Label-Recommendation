@@ -28,7 +28,7 @@ def load_used_notation_keys(path=USED_NOTATION_KEYS_PATH):
 
 
 def keep_notation(notation, used_notation_keys):
-    if notation.find("(+") > 1 and notation not in used_notation_keys:
+    if notation.find("(+") > 0 and notation not in used_notation_keys:
         return False
     return True
 

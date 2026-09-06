@@ -17,13 +17,13 @@ def load_used_notation_keys(path=USED_NOTATION_KEYS_PATH):
 
 
 def keep_notation(notation, used_notation_keys):
-    if notation.find("(+") > 1 and notation not in used_notation_keys:
+    if notation.find("(+") > 0 and notation not in used_notation_keys:
         return False
     return True
 
 
 def notation_of(node):
-    return repr(node).split()[0]
+    return str(node)
 
 
 def extract_variant_notations(ic):
@@ -67,6 +67,7 @@ def build_db():
     cur.execute("CREATE INDEX idx_iconclass_depth ON iconclass(depth);")
     cur.execute("CREATE INDEX idx_iconclass_notation ON iconclass(notation);")
 
+    structure = {}
     inserted = 0
     inserted_variants = 0
     skipped_empty = 0
@@ -88,7 +89,14 @@ def build_db():
             continue
 
         path_nodes = list(node.path())
-        depth = len(path_nodes) - 1
+        depth = len(path_nodes)
+        
+        for i, path_node in enumerate(path_nodes):
+            path_notation = notation_of(path_node)
+
+            if path_notation not in structure:
+                path_parent = notation_of(path_nodes[i - 1]) if i > 0 else None
+                structure[path_notation] = (path_parent, i + 1)
 
         parent = None
         if len(path_nodes) >= 2:
@@ -122,6 +130,26 @@ def build_db():
             if inserted % 100000 == 0:
                 con.commit()
                 print(f"{inserted} entries...")
+
+    cur.execute("DROP TABLE IF EXISTS hierarchy;")
+
+    cur.execute("""
+        CREATE TABLE hierarchy (
+            notation TEXT PRIMARY KEY,
+            parent TEXT,
+            depth INTEGER NOT NULL
+        );
+    """)
+
+    cur.execute("CREATE INDEX idx_hierarchy_parent ON hierarchy(parent);")
+
+    cur.executemany(
+        "INSERT OR REPLACE INTO hierarchy(notation, parent, depth) VALUES (?, ?, ?);",
+        [(n, p, d) for n, (p, d) in structure.items()]
+    )
+
+    print(f"Hierarchy rows: {len(structure)}")
+
 
     con.commit()
     con.close()

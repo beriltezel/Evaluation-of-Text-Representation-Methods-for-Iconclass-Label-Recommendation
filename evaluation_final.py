@@ -21,6 +21,39 @@ EVALUATION_RESULTS_JSONL_PATH = os.path.join(BASE_DIR, "evaluation_results.jsonl
 RUN_TIMESTAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
 GRAPH_DIR = os.path.join(BASE_DIR, "evaluation_graphs", RUN_TIMESTAMP)
 
+NICE_MODEL = {"bm25": "BM25", "sbert": "SBERT",
+              "gemma": "EmbeddingGemma", "siglip": "SigLIP 2"}
+
+NICE_METRIC = {"precision": "Precision", "recall": "Recall",
+               "f1": "$F_1$-Score", "r_precision": "R-Precision",
+               "ap": "MAP", "wu_palmer_mean": "Wu-Palmer mean",
+               "wu_palmer_G_to_P": r"Wu-Palmer $G \rightarrow P$",
+               "wu_palmer_P_to_G": r"Wu-Palmer $P \rightarrow G$",
+               "wu_palmer_gt_to_pred": r"Wu-Palmer $G \rightarrow P$",
+               "wu_palmer_pred_to_gt": r"Wu-Palmer $P \rightarrow G$"}
+
+NICE_METRIC_TITLE = {"precision": "precision", "recall": "recall",
+                     "f1": "$F_1$-score", "r_precision": "R-precision",
+                     "ap": "average precision",
+                     "wu_palmer_mean": "Wu-Palmer score",
+                     "wu_palmer_G_to_P": r"Wu-Palmer $G \rightarrow P$",
+                     "wu_palmer_P_to_G": r"Wu-Palmer $P \rightarrow G$",
+                     "wu_palmer_gt_to_pred": r"Wu-Palmer $G \rightarrow P$",
+                     "wu_palmer_pred_to_gt": r"Wu-Palmer $P \rightarrow G$"}
+
+
+def save_plot(filename, title):
+    """Save the current figure twice: once without a title and once with the
+    title placed below the plot."""
+    base, extension = os.path.splitext(filename)
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(GRAPH_DIR, filename), dpi=300)
+
+    plt.tight_layout(rect=[0, 0.06, 1, 1])
+    plt.figtext(0.5, 0.015, title, ha="center", va="bottom", fontsize=12)
+    plt.savefig(os.path.join(GRAPH_DIR, base + "_with_title" + extension), dpi=300)
+
 
 def load_jsonl(path):
     records = []
@@ -107,7 +140,7 @@ class IconclassHierarchy:
         cur.execute(
             """
             SELECT parent, depth
-            FROM iconclass
+            FROM hierarchy
             WHERE notation=?
             LIMIT 1
             """,
@@ -164,10 +197,6 @@ class IconclassHierarchy:
         lca = max(common, key=lambda c: ancestors1[c])
         lca_depth = ancestors1[lca]
 
-        depth1 = depth1 + 1
-        depth2 = depth2 + 1
-        lca_depth = lca_depth + 1
-
         return (2 * lca_depth) / (depth1 + depth2)
 
     def close(self):
@@ -177,8 +206,8 @@ class IconclassHierarchy:
 def average_best_wu_palmer(predicted_codes, ground_truth_codes, hierarchy):
     if not predicted_codes or not ground_truth_codes:
         return {
-            "wu_palmer_gt_to_pred": 0.0,
-            "wu_palmer_pred_to_gt": 0.0,
+            "wu_palmer_G_to_P": 0.0,
+            "wu_palmer_P_to_G": 0.0,
             "wu_palmer_mean": 0.0
         }
 
@@ -204,8 +233,8 @@ def average_best_wu_palmer(predicted_codes, ground_truth_codes, hierarchy):
     pred_to_gt_avg = sum(pred_to_gt_scores) / len(pred_to_gt_scores)
 
     return {
-        "wu_palmer_gt_to_pred": gt_to_pred_avg,
-        "wu_palmer_pred_to_gt": pred_to_gt_avg,
+        "wu_palmer_G_to_P": gt_to_pred_avg,
+        "wu_palmer_P_to_G": pred_to_gt_avg,
         "wu_palmer_mean": (gt_to_pred_avg + pred_to_gt_avg) / 2
     }
 
@@ -238,9 +267,9 @@ def evaluate_record(record, hierarchy):
         "recall": recall,
         "f1": f1,
         "r_precision": r_precision(predicted_codes, ground_truth_codes),
-        "map": average_precision(predicted_codes, ground_truth_codes),
-        "wu_palmer_gt_to_pred": wu_palmer_scores["wu_palmer_gt_to_pred"],
-        "wu_palmer_pred_to_gt": wu_palmer_scores["wu_palmer_pred_to_gt"],
+        "ap": average_precision(predicted_codes, ground_truth_codes),
+        "wu_palmer_gt_to_pred": wu_palmer_scores["wu_palmer_G_to_P"],
+        "wu_palmer_pred_to_gt": wu_palmer_scores["wu_palmer_P_to_G"],
         "wu_palmer_mean": wu_palmer_scores["wu_palmer_mean"],
         "ground_truth_codes_missing_from_corpus": record.get(
             "ground_truth_codes_missing_from_corpus",
@@ -257,7 +286,7 @@ def summarize_by_model(records):
         "recall",
         "f1",
         "r_precision",
-        "map",
+        "ap",
         "wu_palmer_mean",
         "wu_palmer_gt_to_pred",
         "wu_palmer_pred_to_gt"
@@ -307,15 +336,13 @@ def plot_evaluation_results(records):
         values = [summary[model][metric] for model in models]
 
         plt.figure(figsize=(8, 5))
-        plt.bar(models, values)
+        plt.bar([NICE_MODEL.get(model, model) for model in models], values)
         plt.ylim(0, 1)
-        plt.title(f"Average {metric} by model")
-        plt.xlabel("Model")
-        plt.ylabel(metric)
-        plt.tight_layout()
+        plt.xlabel("Method")
+        plt.ylabel(NICE_METRIC.get(metric, metric))
 
-        graph_path = os.path.join(GRAPH_DIR, f"{metric}_by_model.png")
-        plt.savefig(graph_path, dpi=300)
+        save_plot(f"{metric}_by_method.png",
+                  f"Mean {NICE_METRIC_TITLE.get(metric, metric)} by method")
 
     x = range(len(models))
     width = 0.1
@@ -325,18 +352,16 @@ def plot_evaluation_results(records):
     for i, metric in enumerate(metrics):
         values = [summary[model][metric] for model in models]
         positions = [pos + (i - len(metrics) / 2) * width for pos in x]
-        plt.bar(positions, values, width=width, label=metric)
+        plt.bar(positions, values, width=width, label=NICE_METRIC.get(metric, metric))
 
-    plt.xticks(list(x), models)
+    plt.xticks(list(x), [NICE_MODEL.get(model, model) for model in models])
     plt.ylim(0, 1)
-    plt.title("Average evaluation metrics by model")
-    plt.xlabel("Model")
+    plt.xlabel("Method")
     plt.ylabel("Score")
     plt.legend()
-    plt.tight_layout()
 
-    combined_graph_path = os.path.join(GRAPH_DIR, "all_metrics_by_model.png")
-    plt.savefig(combined_graph_path, dpi=300)
+    save_plot("all_metrics_by_method.png",
+              "Mean scores of the four methods over the 52 queries")
 
     print("Graphs saved in:")
     print(GRAPH_DIR)
@@ -353,7 +378,7 @@ def plot_query_performance(records):
         "recall",
         "f1",
         "r_precision",
-        "map",
+        "ap",
         "wu_palmer_mean",
         "wu_palmer_gt_to_pred",
         "wu_palmer_pred_to_gt"
@@ -404,25 +429,134 @@ def plot_query_performance(records):
                 marker="o",
                 markersize=4,
                 linewidth=1.5,
-                label=model
+                label=NICE_MODEL.get(model, model)
             )
 
         plt.xticks(list(x), query_order, rotation=75, ha="right")
         plt.ylim(0, 1.05)
-        plt.title(f"{metric} per query")
+        title_metric = NICE_METRIC_TITLE.get(metric, metric)
         plt.xlabel("Query")
-        plt.ylabel(metric)
+        plt.ylabel(NICE_METRIC.get(metric, metric))
         plt.grid(True, alpha=0.3)
         plt.legend()
-        plt.tight_layout()
 
-        graph_path = os.path.join(GRAPH_DIR, f"{metric}_per_query.png")
-        plt.savefig(graph_path, dpi=300)
+        save_plot(f"{metric}_per_query.png",
+                  f"{title_metric[0].upper()}{title_metric[1:]} per query")
 
     print("Query performance graphs saved in:")
     print(GRAPH_DIR)
 
     plt.show()
+
+def write_metric_values(records):
+    os.makedirs(GRAPH_DIR, exist_ok=True)
+    values_path = os.path.join(GRAPH_DIR, "metric_values.txt")
+
+    summary, metrics, models = summarize_by_model(records)
+
+    if not models:
+        print("No model scores found for the value file.")
+        return
+
+    query_order = []
+    records_by_model_query = {}
+
+    for record in records:
+        model = record.get("model")
+        query = record.get("query")
+
+        if not model or not query:
+            continue
+
+        if query not in query_order:
+            query_order.append(query)
+
+        records_by_model_query[(model, query)] = record
+
+    metric_width = max(len(metric) for metric in metrics) + 2
+    query_width = max([len(query) for query in query_order] + [len("query")]) + 2
+    model_width = max([len(model) for model in models] + [len("ground truth")]) + 2
+
+    lines = []
+    lines.append("EVALUATION VALUES")
+    lines.append(f"Run: {RUN_TIMESTAMP}")
+    lines.append(f"Models: {', '.join(models)}")
+    lines.append(f"Queries: {len(query_order)}")
+    lines.append("")
+    lines.append("1 AVERAGE VALUES BY MODEL")
+    lines.append("")
+    lines.append("metric".ljust(metric_width) + "".join(model.rjust(model_width) for model in models))
+    lines.append("-" * (metric_width + model_width * len(models)))
+
+    for metric in metrics:
+        row = metric.ljust(metric_width)
+
+        for model in models:
+            row += f"{summary[model][metric]:.4f}".rjust(model_width)
+
+        lines.append(row)
+
+    lines.append("")
+    lines.append("2 VALUES PER QUERY")
+
+    for metric in metrics:
+        lines.append("")
+        lines.append(f"2.{metrics.index(metric) + 1} {metric}")
+        lines.append("")
+        lines.append("query".ljust(query_width) + "".join(model.rjust(model_width) for model in models))
+        lines.append("-" * (query_width + model_width * len(models)))
+
+        for query in query_order:
+            row = query.ljust(query_width)
+
+            for model in models:
+                record = records_by_model_query.get((model, query))
+
+                if record is None:
+                    row += "-".rjust(model_width)
+                else:
+                    row += f"{record.get(metric, 0.0):.4f}".rjust(model_width)
+
+            lines.append(row)
+
+    lines.append("")
+    lines.append("3 NUMBER OF RESULTS PER QUERY")
+    lines.append("")
+    lines.append(
+        "query".ljust(query_width)
+        + "ground truth".rjust(model_width)
+        + "".join(model.rjust(model_width) for model in models)
+    )
+    lines.append("-" * (query_width + model_width * (len(models) + 1)))
+
+    for query in query_order:
+        row = query.ljust(query_width)
+        ground_truth_size = 0
+
+        for model in models:
+            record = records_by_model_query.get((model, query))
+
+            if record is not None:
+                ground_truth_size = len(record.get("ground_truth_codes", []))
+                break
+
+        row += str(ground_truth_size).rjust(model_width)
+
+        for model in models:
+            record = records_by_model_query.get((model, query))
+
+            if record is None:
+                row += "-".rjust(model_width)
+            else:
+                row += str(len(record.get("predicted_codes", []))).rjust(model_width)
+
+        lines.append(row)
+
+    with open(values_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+
+    print("Metric values written to:")
+    print(values_path)
 
 def run_evaluation():
     model_records = load_jsonl(MODEL_RESULTS_JSONL_PATH)
@@ -442,6 +576,7 @@ def run_evaluation():
     print(f"Model result records processed: {len(model_records)}")
     print(f"Evaluation results written to: {EVALUATION_RESULTS_JSONL_PATH}")
 
+    write_metric_values(evaluation_records)
     plot_evaluation_results(evaluation_records)
     plot_query_performance(evaluation_records)
 

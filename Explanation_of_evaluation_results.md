@@ -10,9 +10,9 @@ Each line is one JSON object, meaning one evaluated query for one model. For exa
 
 `source_run_id`: the run ID from the original model output in `model_results.jsonl`. This helps connect the evaluation result back to the model run.
 
-`model`: the model that was evaluated, for example `bm25`, `sbert`, `gemma`, or `siglip`.
+`model`: the model that was evaluated, one of `bm25`, `sbert`, `gemma`, or `siglip`.
 
-`model_name`: the exact model name if available (used for Gemma and SigLIP).
+`model_name`: the exact name of the model that produced the results. The value is empty for BM25, since BM25 is a ranking function and not a named model.
 
 `query`: the query text from the ground-truth CSV file.
 
@@ -32,7 +32,7 @@ Each line is one JSON object, meaning one evaluated query for one model. For exa
 
 `r_precision`: precision calculated at R, where R is the number of ground-truth codes for that query.
 
-`map`: mean average precision. This measures whether the correct results appear high in the ranked prediction list.
+`ap`: the average precision of this single query. It measures whether the correct results appear high in the ranked prediction list. The mean average precision is the mean of these values over all queries and is not part of this file.
 
 `wu_palmer_gt_to_pred`: for each ground-truth code, the script finds the closest predicted code using Wu-Palmer similarity and averages the scores. This shows how well the predictions cover the ground truth hierarchically.
 
@@ -47,3 +47,5 @@ Each line is one JSON object, meaning one evaluated query for one model. For exa
 ## Notes
 
 The evaluation results are created from `model_results.jsonl`, while the Wu-Palmer scores also use the Iconclass hierarchy database.
+
+The mean values of all metrics by method are written to `metric_values.txt` in the timestamped folder under `evaluation_graphs`, together with the graphs of the run.

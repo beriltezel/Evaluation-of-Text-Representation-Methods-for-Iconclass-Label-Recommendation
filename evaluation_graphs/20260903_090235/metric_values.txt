@@ -1,0 +1,532 @@
+EVALUATION VALUES
+Run: 20260903_090235
+Models: bm25, gemma, sbert, siglip
+Queries: 52
+
+1 AVERAGE VALUES BY MODEL
+
+metric                          bm25         gemma         sbert        siglip
+------------------------------------------------------------------------------
+precision                     0.3239        0.3212        0.3288        0.1788
+recall                        0.2507        0.3272        0.3039        0.2041
+f1                            0.2208        0.2538        0.2490        0.1420
+r_precision                   0.2082        0.2637        0.2455        0.1466
+ap                            0.1737        0.2218        0.2155        0.1301
+wu_palmer_mean                0.5955        0.6721        0.6707        0.5248
+wu_palmer_gt_to_pred          0.5771        0.6228        0.6123        0.5753
+wu_palmer_pred_to_gt          0.6140        0.7215        0.7290        0.4744
+
+2 VALUES PER QUERY
+
+2.1 precision
+
+query                                                bm25         gemma         sbert        siglip
+---------------------------------------------------------------------------------------------------
+reading a book                                     0.4000        0.6000        0.3500        0.3000
+bald man                                           0.1000        0.2000        0.2000        0.2000
+saint holding a monstrance                         0.1000        0.1000        0.0000        0.1500
+fireman                                            0.0000        0.4000        0.3000        0.1500
+portrait                                           0.5000        0.7000        0.8500        0.1500
+portrait of a toddler                              0.1500        0.2000        0.1000        0.0500
+portrait of a girl                                 0.1500        0.0500        0.0000        0.0500
+bridge                                             0.8000        0.7000        0.7500        0.2500
+street                                             0.6000        0.5000        0.7500        0.2000
+soldier on a horse                                 0.0500        0.1500        0.1500        0.3000
+officer riding a horse                             0.0000        0.0500        0.0500        0.1000
+making lace                                        0.0500        0.1500        0.2000        0.2000
+Virgin Mary holding the Christ Child               0.0500        0.1000        0.1500        0.0000
+acanthus ornament                                  0.3000        0.4500        0.4500        0.2000
+god the father holding the body of christ          0.2000        0.2000        0.1500        0.0000
+father and daughter                                0.1000        0.2000        0.2000        0.1500
+touching something                                 0.2000        0.2000        0.4500        0.0500
+hands folded                                       0.2500        0.2000        0.2500        0.2500
+elderly woman                                      0.0500        0.0500        0.0500        0.1500
+instructing the gardener                           0.0500        0.1000        0.0500        0.0500
+commanding gesture                                 0.0000        0.5500        0.1000        0.0000
+chandelier                                         0.0000        0.2000        0.1500        0.0500
+castle                                             0.7857        0.2500        0.3000        0.1000
+girl                                               0.2500        0.2000        0.1000        0.1000
+running horse                                      0.1500        0.3000        0.4500        0.2000
+young girl                                         0.3000        0.1000        0.1500        0.1500
+annunciation                                       0.7000        0.4500        0.5000        0.5500
+Mary annunciation                                  0.4000        0.4000        0.4500        0.3500
+dragon                                             0.4000        0.2000        0.1500        0.0500
+lion                                               0.6000        0.2000        0.3000        0.1500
+sleeping lion                                      0.0500        0.2000        0.2500        0.1000
+dog                                                0.7500        0.5000        0.6000        0.1500
+aggressive                                         0.3000        0.1500        0.1000        0.1000
+annunciation to the virgin                         0.2000        0.4000        0.4500        0.1000
+horse                                              0.4500        0.2500        0.4000        0.2500
+landscape                                          1.0000        0.8500        0.9000        0.7500
+kind of dog                                        0.5000        0.3500        0.4000        0.2500
+dog leash                                          0.2500        0.3000        0.4000        0.1500
+walking the dog                                    0.2000        0.1500        0.2500        0.1500
+hill                                               0.8571        0.4500        0.3500        0.0500
+high hill                                          0.1500        0.2000        0.1500        0.0500
+saint                                              0.0000        0.3000        0.2500        0.0500
+Jesus with beard                                   0.0000        0.0000        0.0000        0.0000
+Jesus without beard                                0.0000        0.4000        0.9000        0.9000
+Christ beardless                                   1.0000        0.9500        0.9500        1.0000
+Saint John                                         0.0000        0.0000        0.0000        0.0000
+Saint Agnes                                        1.0000        0.9000        0.7500        0.0000
+Jupiter                                            0.9000        0.8000        0.8000        0.0000
+Jupyter                                            0.0000        0.4500        0.0000        0.0000
+running and jumping                                0.4000        0.6500        0.7500        0.5000
+hatred                                             1.0000        0.1500        0.2000        0.0500
+jilted lover                                       0.1500        0.1500        0.1500        0.0500
+
+2.2 recall
+
+query                                                bm25         gemma         sbert        siglip
+---------------------------------------------------------------------------------------------------
+reading a book                                     0.3333        0.5000        0.2917        0.2500
+bald man                                           0.2500        0.5000        0.5000        0.5000
+saint holding a monstrance                         0.6667        0.6667        0.0000        1.0000
+fireman                                            0.0000        1.0000        0.7500        0.3750
+portrait                                           0.1429        0.2000        0.2429        0.0429
+portrait of a toddler                              0.3750        0.5000        0.2500        0.1250
+portrait of a girl                                 0.4286        0.1429        0.0000        0.1429
+bridge                                             0.5333        0.4667        0.5000        0.1667
+street                                             0.3077        0.2564        0.3846        0.1026
+soldier on a horse                                 0.0625        0.1875        0.1875        0.3750
+officer riding a horse                             0.0000        0.0625        0.0625        0.1250
+making lace                                        0.2500        0.7500        1.0000        1.0000
+Virgin Mary holding the Christ Child               0.0263        0.0526        0.0789        0.0000
+acanthus ornament                                  0.6000        0.9000        0.9000        0.4000
+god the father holding the body of christ          0.5000        0.5000        0.3750        0.0000
+father and daughter                                0.0769        0.1538        0.1538        0.1154
+touching something                                 0.0727        0.0727        0.1636        0.0182
+hands folded                                       0.8333        0.6667        0.8333        0.8333
+elderly woman                                      0.3333        0.3333        0.3333        1.0000
+instructing the gardener                           0.1429        0.2857        0.1429        0.1429
+commanding gesture                                 0.0000        0.8462        0.1538        0.0000
+chandelier                                         0.0000        0.8000        0.6000        0.2000
+castle                                             0.9167        0.4167        0.5000        0.1667
+girl                                               0.1163        0.0930        0.0465        0.0465
+running horse                                      0.2143        0.4286        0.6429        0.2857
+young girl                                         0.3750        0.1250        0.1875        0.1875
+annunciation                                       0.4118        0.2647        0.2941        0.3235
+Mary annunciation                                  0.2963        0.2963        0.3333        0.2593
+dragon                                             0.1333        0.0667        0.0500        0.0167
+lion                                               0.1600        0.0533        0.0800        0.0400
+sleeping lion                                      0.2000        0.8000        1.0000        0.4000
+dog                                                0.1923        0.1282        0.1538        0.0385
+aggressive                                         0.0600        0.0300        0.0200        0.0200
+annunciation to the virgin                         0.1818        0.3636        0.4091        0.0909
+horse                                              0.0643        0.0357        0.0571        0.0357
+landscape                                          0.0743        0.0632        0.0669        0.0558
+kind of dog                                        0.3448        0.2414        0.2759        0.1724
+dog leash                                          0.3846        0.4615        0.6154        0.2308
+walking the dog                                    0.2105        0.1579        0.2632        0.1579
+hill                                               0.5000        0.3750        0.2917        0.0417
+high hill                                          0.6000        0.8000        0.6000        0.2000
+saint                                              0.0000        0.0833        0.0694        0.0139
+Jesus with beard                                   0.0000        0.0000        0.0000        0.0000
+Jesus without beard                                0.0000        0.1176        0.2647        0.2647
+Christ beardless                                   0.2941        0.2794        0.2794        0.2941
+Saint John                                         0.0000        0.0000        0.0000        0.0000
+Saint Agnes                                        0.5263        0.4737        0.3947        0.0000
+Jupiter                                            0.1525        0.1356        0.1356        0.0000
+Jupyter                                            0.0000        0.0763        0.0000        0.0000
+running and jumping                                0.1231        0.2000        0.2308        0.1538
+hatred                                             0.0690        0.1034        0.1379        0.0345
+jilted lover                                       0.5000        0.5000        0.5000        0.1667
+
+2.3 f1
+
+query                                                bm25         gemma         sbert        siglip
+---------------------------------------------------------------------------------------------------
+reading a book                                     0.3636        0.5455        0.3182        0.2727
+bald man                                           0.1429        0.2857        0.2857        0.2857
+saint holding a monstrance                         0.1739        0.1739        0.0000        0.2609
+fireman                                            0.0000        0.5714        0.4286        0.2143
+portrait                                           0.2222        0.3111        0.3778        0.0667
+portrait of a toddler                              0.2143        0.2857        0.1429        0.0714
+portrait of a girl                                 0.2222        0.0741        0.0000        0.0741
+bridge                                             0.6400        0.5600        0.6000        0.2000
+street                                             0.4068        0.3390        0.5085        0.1356
+soldier on a horse                                 0.0556        0.1667        0.1667        0.3333
+officer riding a horse                             0.0000        0.0556        0.0556        0.1111
+making lace                                        0.0833        0.2500        0.3333        0.3333
+Virgin Mary holding the Christ Child               0.0345        0.0690        0.1034        0.0000
+acanthus ornament                                  0.4000        0.6000        0.6000        0.2667
+god the father holding the body of christ          0.2857        0.2857        0.2143        0.0000
+father and daughter                                0.0870        0.1739        0.1739        0.1304
+touching something                                 0.1067        0.1067        0.2400        0.0267
+hands folded                                       0.3846        0.3077        0.3846        0.3846
+elderly woman                                      0.0870        0.0870        0.0870        0.2609
+instructing the gardener                           0.0741        0.1481        0.0741        0.0741
+commanding gesture                                 0.0000        0.6667        0.1212        0.0000
+chandelier                                         0.0000        0.3200        0.2400        0.0800
+castle                                             0.8462        0.3125        0.3750        0.1250
+girl                                               0.1587        0.1270        0.0635        0.0635
+running horse                                      0.1765        0.3529        0.5294        0.2353
+young girl                                         0.3333        0.1111        0.1667        0.1667
+annunciation                                       0.5185        0.3333        0.3704        0.4074
+Mary annunciation                                  0.3404        0.3404        0.3830        0.2979
+dragon                                             0.2000        0.1000        0.0750        0.0250
+lion                                               0.2526        0.0842        0.1263        0.0632
+sleeping lion                                      0.0800        0.3200        0.4000        0.1600
+dog                                                0.3061        0.2041        0.2449        0.0612
+aggressive                                         0.1000        0.0500        0.0333        0.0333
+annunciation to the virgin                         0.1905        0.3810        0.4286        0.0952
+horse                                              0.1125        0.0625        0.1000        0.0625
+landscape                                          0.1384        0.1176        0.1246        0.1038
+kind of dog                                        0.4082        0.2857        0.3265        0.2041
+dog leash                                          0.3030        0.3636        0.4848        0.1818
+walking the dog                                    0.2051        0.1538        0.2564        0.1538
+hill                                               0.6316        0.4091        0.3182        0.0455
+high hill                                          0.2400        0.3200        0.2400        0.0800
+saint                                              0.0000        0.1304        0.1087        0.0217
+Jesus with beard                                   0.0000        0.0000        0.0000        0.0000
+Jesus without beard                                0.0000        0.1818        0.4091        0.4091
+Christ beardless                                   0.4545        0.4318        0.4318        0.4545
+Saint John                                         0.0000        0.0000        0.0000        0.0000
+Saint Agnes                                        0.6897        0.6207        0.5172        0.0000
+Jupiter                                            0.2609        0.2319        0.2319        0.0000
+Jupyter                                            0.0000        0.1304        0.0000        0.0000
+running and jumping                                0.1882        0.3059        0.3529        0.2353
+hatred                                             0.1290        0.1224        0.1633        0.0408
+jilted lover                                       0.2308        0.2308        0.2308        0.0769
+
+2.4 r_precision
+
+query                                                bm25         gemma         sbert        siglip
+---------------------------------------------------------------------------------------------------
+reading a book                                     0.3333        0.5000        0.2917        0.2500
+bald man                                           0.2500        0.5000        0.3750        0.2500
+saint holding a monstrance                         0.6667        0.6667        0.0000        0.6667
+fireman                                            0.0000        0.7500        0.6250        0.2500
+portrait                                           0.1429        0.2000        0.2429        0.0429
+portrait of a toddler                              0.2500        0.2500        0.0000        0.1250
+portrait of a girl                                 0.0000        0.0000        0.0000        0.0000
+bridge                                             0.5333        0.4667        0.5000        0.1667
+street                                             0.3077        0.2564        0.3846        0.1026
+soldier on a horse                                 0.0625        0.1875        0.1875        0.3750
+officer riding a horse                             0.0000        0.0625        0.0625        0.1250
+making lace                                        0.2500        0.5000        0.5000        0.5000
+Virgin Mary holding the Christ Child               0.0263        0.0526        0.0789        0.0000
+acanthus ornament                                  0.5000        0.7000        0.6000        0.3000
+god the father holding the body of christ          0.2500        0.3750        0.2500        0.0000
+father and daughter                                0.0769        0.1538        0.1538        0.1154
+touching something                                 0.0727        0.0727        0.1636        0.0182
+hands folded                                       0.3333        0.1667        0.3333        0.5000
+elderly woman                                      0.3333        0.3333        0.3333        0.3333
+instructing the gardener                           0.1429        0.1429        0.1429        0.1429
+commanding gesture                                 0.0000        0.7692        0.1538        0.0000
+chandelier                                         0.0000        0.6000        0.6000        0.0000
+castle                                             0.7500        0.4167        0.4167        0.1667
+girl                                               0.1163        0.0930        0.0465        0.0465
+running horse                                      0.1429        0.4286        0.5000        0.2857
+young girl                                         0.3750        0.1250        0.1875        0.1250
+annunciation                                       0.4118        0.2647        0.2941        0.3235
+Mary annunciation                                  0.2963        0.2963        0.3333        0.2593
+dragon                                             0.1333        0.0667        0.0500        0.0167
+lion                                               0.1600        0.0533        0.0800        0.0400
+sleeping lion                                      0.2000        0.4000        0.6000        0.2000
+dog                                                0.1923        0.1282        0.1538        0.0385
+aggressive                                         0.0600        0.0300        0.0200        0.0200
+annunciation to the virgin                         0.1818        0.3636        0.4091        0.0909
+horse                                              0.0643        0.0357        0.0571        0.0357
+landscape                                          0.0743        0.0632        0.0669        0.0558
+kind of dog                                        0.3448        0.2414        0.2759        0.1724
+dog leash                                          0.3846        0.2308        0.4615        0.1538
+walking the dog                                    0.2105        0.1579        0.2632        0.1579
+hill                                               0.5000        0.3750        0.2917        0.0417
+high hill                                          0.2000        0.6000        0.6000        0.2000
+saint                                              0.0000        0.0833        0.0694        0.0139
+Jesus with beard                                   0.0000        0.0000        0.0000        0.0000
+Jesus without beard                                0.0000        0.1176        0.2647        0.2647
+Christ beardless                                   0.2941        0.2794        0.2794        0.2941
+Saint John                                         0.0000        0.0000        0.0000        0.0000
+Saint Agnes                                        0.5263        0.4737        0.3947        0.0000
+Jupiter                                            0.1525        0.1356        0.1356        0.0000
+Jupyter                                            0.0000        0.0763        0.0000        0.0000
+running and jumping                                0.1231        0.2000        0.2308        0.1538
+hatred                                             0.0690        0.1034        0.1379        0.0345
+jilted lover                                       0.3333        0.1667        0.1667        0.1667
+
+2.5 ap
+
+query                                                bm25         gemma         sbert        siglip
+---------------------------------------------------------------------------------------------------
+reading a book                                     0.2611        0.3718        0.2507        0.2288
+bald man                                           0.2500        0.5000        0.4167        0.3301
+saint holding a monstrance                         0.6667        0.3889        0.0000        0.8667
+fireman                                            0.0000        0.8761        0.5747        0.2250
+portrait                                           0.1083        0.1723        0.2304        0.0063
+portrait of a toddler                              0.1125        0.1096        0.0263        0.0625
+portrait of a girl                                 0.0536        0.0119        0.0000        0.0071
+bridge                                             0.5130        0.3529        0.4075        0.1571
+street                                             0.2381        0.1562        0.2978        0.0637
+soldier on a horse                                 0.0069        0.0308        0.0846        0.1645
+officer riding a horse                             0.0000        0.0063        0.0208        0.0260
+making lace                                        0.2500        0.5500        0.6833        0.7321
+Virgin Mary holding the Christ Child               0.0088        0.0090        0.0576        0.0000
+acanthus ornament                                  0.5462        0.7623        0.7424        0.2964
+god the father holding the body of christ          0.2583        0.3353        0.1797        0.0000
+father and daughter                                0.0119        0.1220        0.1538        0.0615
+touching something                                 0.0645        0.0540        0.0949        0.0015
+hands folded                                       0.4310        0.3138        0.4371        0.4474
+elderly woman                                      0.1111        0.3333        0.3333        0.4874
+instructing the gardener                           0.0286        0.1619        0.1429        0.1429
+commanding gesture                                 0.0000        0.7969        0.1077        0.0000
+chandelier                                         0.0000        0.5722        0.4833        0.0333
+castle                                             0.7289        0.3276        0.3737        0.1250
+girl                                               0.0710        0.0353        0.0136        0.0109
+running horse                                      0.0590        0.2190        0.4386        0.2857
+young girl                                         0.1928        0.0714        0.1186        0.0298
+annunciation                                       0.3359        0.1957        0.2402        0.2433
+Mary annunciation                                  0.2098        0.1310        0.2313        0.0978
+dragon                                             0.0504        0.0394        0.0242        0.0167
+lion                                               0.1122        0.0295        0.0759        0.0052
+sleeping lion                                      0.2000        0.4800        0.5769        0.2444
+dog                                                0.1529        0.0975        0.1171        0.0173
+aggressive                                         0.0309        0.0217        0.0150        0.0079
+annunciation to the virgin                         0.0584        0.1417        0.3181        0.0124
+horse                                              0.0582        0.0204        0.0350        0.0198
+landscape                                          0.0743        0.0630        0.0633        0.0553
+kind of dog                                        0.2948        0.1148        0.1855        0.0968
+dog leash                                          0.2595        0.1096        0.3421        0.1692
+walking the dog                                    0.1297        0.1228        0.1587        0.1053
+hill                                               0.4439        0.2680        0.2578        0.0028
+high hill                                          0.3167        0.6400        0.4833        0.1000
+saint                                              0.0000        0.0469        0.0344        0.0139
+Jesus with beard                                   0.0000        0.0000        0.0000        0.0000
+Jesus without beard                                0.0000        0.0429        0.2258        0.2560
+Christ beardless                                   0.2941        0.2779        0.2733        0.2941
+Saint John                                         0.0000        0.0000        0.0000        0.0000
+Saint Agnes                                        0.5263        0.4394        0.3712        0.0000
+Jupiter                                            0.1395        0.0936        0.1084        0.0000
+Jupyter                                            0.0000        0.0333        0.0000        0.0000
+running and jumping                                0.1083        0.1529        0.1923        0.1278
+hatred                                             0.0690        0.0558        0.0882        0.0031
+jilted lover                                       0.1961        0.2768        0.1167        0.0833
+
+2.6 wu_palmer_mean
+
+query                                                bm25         gemma         sbert        siglip
+---------------------------------------------------------------------------------------------------
+reading a book                                     0.6823        0.7408        0.5734        0.4816
+bald man                                           0.3933        0.4966        0.5530        0.4684
+saint holding a monstrance                         0.6127        0.7385        0.4730        0.8156
+fireman                                            0.0000        0.8311        0.7711        0.6076
+portrait                                           0.6657        0.6854        0.6571        0.5783
+portrait of a toddler                              0.6986        0.8896        0.6328        0.5307
+portrait of a girl                                 0.7259        0.5028        0.1818        0.5379
+bridge                                             0.8451        0.8137        0.8285        0.5003
+street                                             0.7343        0.6840        0.7773        0.5230
+soldier on a horse                                 0.5624        0.5122        0.6410        0.6484
+officer riding a horse                             0.5046        0.5218        0.5193        0.4751
+making lace                                        0.4293        0.6393        0.8438        0.8009
+Virgin Mary holding the Christ Child               0.5385        0.4713        0.7647        0.3781
+acanthus ornament                                  0.8512        0.9256        0.9517        0.7505
+god the father holding the body of christ          0.7762        0.7282        0.7663        0.2742
+father and daughter                                0.4114        0.4787        0.4733        0.4610
+touching something                                 0.5198        0.5251        0.6288        0.4310
+hands folded                                       0.8400        0.8451        0.8353        0.8494
+elderly woman                                      0.6066        0.8663        0.8724        0.7925
+instructing the gardener                           0.2575        0.5198        0.5248        0.3952
+commanding gesture                                 0.0000        0.8486        0.6165        0.4544
+chandelier                                         0.0000        0.7582        0.6342        0.7018
+castle                                             0.9555        0.5137        0.6094        0.3946
+girl                                               0.6013        0.5674        0.3348        0.3898
+running horse                                      0.4313        0.6302        0.8472        0.5999
+young girl                                         0.7856        0.6382        0.7521        0.6371
+annunciation                                       0.8908        0.8218        0.8196        0.7845
+Mary annunciation                                  0.7462        0.8255        0.8483        0.7363
+dragon                                             0.6272        0.4954        0.4948        0.1791
+lion                                               0.7125        0.5255        0.5342        0.3137
+sleeping lion                                      0.4480        0.7046        0.8106        0.5468
+dog                                                0.6953        0.6473        0.6429        0.3541
+aggressive                                         0.5755        0.3575        0.4089        0.3401
+annunciation to the virgin                         0.6621        0.8417        0.8756        0.5752
+horse                                              0.6236        0.5493        0.5755        0.4429
+landscape                                          0.7339        0.8447        0.7773        0.7357
+kind of dog                                        0.7536        0.7207        0.6570        0.6595
+dog leash                                          0.8629        0.7745        0.8696        0.5164
+walking the dog                                    0.5388        0.5258        0.6500        0.4930
+hill                                               0.8801        0.6377        0.5208        0.3504
+high hill                                          0.6301        0.6709        0.5674        0.3329
+saint                                              0.6280        0.8037        0.7673        0.5155
+Jesus with beard                                   0.2702        0.2584        0.6883        0.6362
+Jesus without beard                                0.2491        0.6924        0.9179        0.9058
+Christ beardless                                   0.9559        0.9570        0.9363        0.9592
+Saint John                                         0.5087        0.6228        0.7873        0.2660
+Saint Agnes                                        0.9683        0.9593        0.9053        0.2511
+Jupiter                                            0.8146        0.7862        0.7471        0.2014
+Jupyter                                            0.0000        0.6019        0.1479        0.3259
+running and jumping                                0.5717        0.7566        0.7658        0.7143
+hatred                                             0.5511        0.4690        0.4558        0.1905
+jilted lover                                       0.6404        0.7292        0.6401        0.4877
+
+2.7 wu_palmer_gt_to_pred
+
+query                                                bm25         gemma         sbert        siglip
+---------------------------------------------------------------------------------------------------
+reading a book                                     0.5991        0.5812        0.3793        0.3755
+bald man                                           0.4750        0.5000        0.5167        0.5357
+saint holding a monstrance                         0.8571        0.8571        0.3746        1.0000
+fireman                                            0.0000        1.0000        0.9747        0.8932
+portrait                                           0.4666        0.4385        0.3381        0.4321
+portrait of a toddler                              0.9047        0.9578        0.9339        0.8997
+portrait of a girl                                 0.9405        0.5352        0.2320        0.7926
+bridge                                             0.7085        0.6528        0.6790        0.5002
+street                                             0.6373        0.5639        0.6319        0.5206
+soldier on a horse                                 0.5260        0.3587        0.5327        0.6465
+officer riding a horse                             0.4373        0.2867        0.2708        0.3712
+making lace                                        0.6381        0.7500        1.0000        1.0000
+Virgin Mary holding the Christ Child               0.6820        0.6864        0.7665        0.4482
+acanthus ornament                                  0.9108        0.9333        0.9933        0.6580
+god the father holding the body of christ          0.8214        0.7887        0.8118        0.3769
+father and daughter                                0.4248        0.2008        0.1891        0.3074
+touching something                                 0.3890        0.3954        0.4706        0.3552
+hands folded                                       0.8333        0.8261        0.8333        0.8333
+elderly woman                                      0.9394        0.9394        0.9394        1.0000
+instructing the gardener                           0.3016        0.4789        0.4447        0.3859
+commanding gesture                                 0.0000        0.9130        0.6155        0.6289
+chandelier                                         0.0000        0.8364        0.8222        0.9184
+castle                                             0.9333        0.4722        0.6050        0.3476
+girl                                               0.2912        0.2942        0.2826        0.2949
+running horse                                      0.5863        0.5340        0.8421        0.6756
+young girl                                         0.6946        0.4007        0.6622        0.6939
+annunciation                                       0.8157        0.7435        0.7003        0.8116
+Mary annunciation                                  0.7570        0.8239        0.7767        0.8571
+dragon                                             0.3571        0.1237        0.1313        0.1097
+lion                                               0.4771        0.1650        0.1752        0.2462
+sleeping lion                                      0.6506        0.8667        1.0000        0.7890
+dog                                                0.4219        0.3861        0.3757        0.3849
+aggressive                                         0.3843        0.3420        0.3719        0.3555
+annunciation to the virgin                         0.7112        0.8498        0.8248        0.6960
+horse                                              0.3514        0.2199        0.2507        0.3709
+landscape                                          0.4678        0.7060        0.5684        0.5824
+kind of dog                                        0.5930        0.5509        0.4703        0.6140
+dog leash                                          0.8761        0.8750        0.9007        0.6887
+walking the dog                                    0.7013        0.6653        0.7061        0.6816
+hill                                               0.7704        0.4702        0.4585        0.3247
+high hill                                          0.7615        0.8000        0.6000        0.4846
+saint                                              0.5124        0.8087        0.7490        0.6774
+Jesus with beard                                   0.4632        0.4008        0.7180        0.7180
+Jesus without beard                                0.4209        0.8831        0.9137        0.9116
+Christ beardless                                   0.9119        0.9211        0.9226        0.9185
+Saint John                                         0.6432        0.7174        0.7262        0.4569
+Saint Agnes                                        0.9367        0.9270        0.8939        0.4105
+Jupiter                                            0.6420        0.6111        0.5162        0.2872
+Jupyter                                            0.0000        0.5878        0.1706        0.3735
+running and jumping                                0.5300        0.5591        0.5639        0.5474
+hatred                                             0.1021        0.4094        0.4232        0.1091
+jilted lover                                       0.7500        0.7904        0.7904        0.6187
+
+2.8 wu_palmer_pred_to_gt
+
+query                                                bm25         gemma         sbert        siglip
+---------------------------------------------------------------------------------------------------
+reading a book                                     0.7655        0.9004        0.7675        0.5877
+bald man                                           0.3115        0.4932        0.5893        0.4011
+saint holding a monstrance                         0.3684        0.6199        0.5714        0.6313
+fireman                                            0.0000        0.6623        0.5675        0.3220
+portrait                                           0.8649        0.9322        0.9762        0.7246
+portrait of a toddler                              0.4925        0.8215        0.3318        0.1618
+portrait of a girl                                 0.5113        0.4703        0.1315        0.2833
+bridge                                             0.9818        0.9747        0.9780        0.5004
+street                                             0.8313        0.8040        0.9226        0.5254
+soldier on a horse                                 0.5989        0.6657        0.7493        0.6503
+officer riding a horse                             0.5718        0.7569        0.7678        0.5790
+making lace                                        0.2205        0.5285        0.6876        0.6018
+Virgin Mary holding the Christ Child               0.3949        0.2562        0.7628        0.3080
+acanthus ornament                                  0.7916        0.9179        0.9101        0.8431
+god the father holding the body of christ          0.7309        0.6677        0.7207        0.1715
+father and daughter                                0.3980        0.7567        0.7575        0.6146
+touching something                                 0.6505        0.6547        0.7871        0.5068
+hands folded                                       0.8467        0.8642        0.8373        0.8654
+elderly woman                                      0.2738        0.7931        0.8055        0.5851
+instructing the gardener                           0.2135        0.5607        0.6048        0.4046
+commanding gesture                                 0.0000        0.7842        0.6174        0.2800
+chandelier                                         0.0000        0.6800        0.4461        0.4851
+castle                                             0.9776        0.5553        0.6139        0.4416
+girl                                               0.9114        0.8406        0.3869        0.4848
+running horse                                      0.2764        0.7265        0.8524        0.5242
+young girl                                         0.8766        0.8757        0.8420        0.5804
+annunciation                                       0.9659        0.9002        0.9390        0.7574
+Mary annunciation                                  0.7353        0.8271        0.9199        0.6155
+dragon                                             0.8974        0.8671        0.8583        0.2485
+lion                                               0.9479        0.8861        0.8932        0.3812
+sleeping lion                                      0.2454        0.5425        0.6213        0.3046
+dog                                                0.9688        0.9085        0.9101        0.3234
+aggressive                                         0.7667        0.3731        0.4459        0.3247
+annunciation to the virgin                         0.6130        0.8335        0.9263        0.4543
+horse                                              0.8958        0.8786        0.9004        0.5148
+landscape                                          1.0000        0.9833        0.9862        0.8891
+kind of dog                                        0.9141        0.8905        0.8437        0.7050
+dog leash                                          0.8496        0.6740        0.8385        0.3441
+walking the dog                                    0.3762        0.3862        0.5939        0.3043
+hill                                               0.9897        0.8052        0.5831        0.3761
+high hill                                          0.4987        0.5418        0.5347        0.1812
+saint                                              0.7436        0.7986        0.7856        0.3537
+Jesus with beard                                   0.0773        0.1161        0.6586        0.5545
+Jesus without beard                                0.0773        0.5018        0.9222        0.9000
+Christ beardless                                   1.0000        0.9929        0.9500        1.0000
+Saint John                                         0.3742        0.5282        0.8485        0.0750
+Saint Agnes                                        1.0000        0.9916        0.9167        0.0917
+Jupiter                                            0.9871        0.9613        0.9780        0.1155
+Jupyter                                            0.0000        0.6159        0.1253        0.2782
+running and jumping                                0.6134        0.9541        0.9678        0.8813
+hatred                                             1.0000        0.5287        0.4883        0.2718
+jilted lover                                       0.5308        0.6680        0.4898        0.3567
+
+3 NUMBER OF RESULTS PER QUERY
+
+query                                        ground truth          bm25         gemma         sbert        siglip
+-----------------------------------------------------------------------------------------------------------------
+reading a book                                         24            20            20            20            20
+bald man                                                8            20            20            20            20
+saint holding a monstrance                              3            20            20            20            20
+fireman                                                 8             0            20            20            20
+portrait                                               70            20            20            20            20
+portrait of a toddler                                   8            20            20            20            20
+portrait of a girl                                      7            20            20            20            20
+bridge                                                 30            20            20            20            20
+street                                                 39            20            20            20            20
+soldier on a horse                                     16            20            20            20            20
+officer riding a horse                                 16            20            20            20            20
+making lace                                             4            20            20            20            20
+Virgin Mary holding the Christ Child                   38            20            20            20            20
+acanthus ornament                                      10            20            20            20            20
+god the father holding the body of christ               8            20            20            20            20
+father and daughter                                    26            20            20            20            20
+touching something                                     55            20            20            20            20
+hands folded                                            6            20            20            20            20
+elderly woman                                           3            20            20            20            20
+instructing the gardener                                7            20            20            20            20
+commanding gesture                                     13             9            20            20            20
+chandelier                                              5             0            20            20            20
+castle                                                 12            14            20            20            20
+girl                                                   43            20            20            20            20
+running horse                                          14            20            20            20            20
+young girl                                             16            20            20            20            20
+annunciation                                           34            20            20            20            20
+Mary annunciation                                      27            20            20            20            20
+dragon                                                 60            20            20            20            20
+lion                                                   75            20            20            20            20
+sleeping lion                                           5            20            20            20            20
+dog                                                    78            20            20            20            20
+aggressive                                            100            20            20            20            20
+annunciation to the virgin                             22            20            20            20            20
+horse                                                 140            20            20            20            20
+landscape                                             269            20            20            20            20
+kind of dog                                            29            20            20            20            20
+dog leash                                              13            20            20            20            20
+walking the dog                                        19            20            20            20            20
+hill                                                   24            14            20            20            20
+high hill                                               5            20            20            20            20
+saint                                                  72            20            20            20            20
+Jesus with beard                                       18            20            20            20            20
+Jesus without beard                                    68            20            20            20            20
+Christ beardless                                       68            20            20            20            20
+Saint John                                             26            20            20            20            20
+Saint Agnes                                            38            20            20            20            20
+Jupiter                                               118            20            20            20            20
+Jupyter                                               118             0            20            20            20
+running and jumping                                    65            20            20            20            20
+hatred                                                 29             2            20            20            20
+jilted lover                                            6            20            20            20            20
